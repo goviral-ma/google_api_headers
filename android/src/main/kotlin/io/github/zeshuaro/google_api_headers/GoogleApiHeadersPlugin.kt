@@ -13,8 +13,8 @@ import java.math.BigInteger
 import java.security.MessageDigest
 
 
-class GoogleApiHeadersPlugin(act: Activity) : MethodCallHandler {
-    var activity: Activity = act
+class GoogleApiHeadersPlugin(act: Activity?) : MethodCallHandler {
+    var activity: Activity? = act
 
     companion object {
         @JvmStatic
@@ -31,7 +31,7 @@ class GoogleApiHeadersPlugin(act: Activity) : MethodCallHandler {
         }
         if (call.method == "getSigningCertSha1") {
             try {
-                val info: PackageInfo = activity.packageManager.getPackageInfo(call.arguments<String>(), PackageManager.GET_SIGNATURES)
+                val info: PackageInfo = activity?.packageManager.getPackageInfo(call.arguments<String>(), PackageManager.GET_SIGNATURES)
                 for (signature in info.signatures) {
                     val md: MessageDigest = MessageDigest.getInstance("SHA1")
                     md.update(signature.toByteArray())
